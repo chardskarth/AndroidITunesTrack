@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">ITunesTrack</string>
+    <string name="title_item_list">Items</string>
+    <string name="title_item_detail">Item Detail</string>
+    <string name="track_artwork_content_description">Track artwork</string>
+    <string name="track_list_price_no_price">Not Available</string>
+    <string name="center_text_tap_retry">Oops, can\'t load iTunes track.\nTap to retry.</string>
+
+</resources>
