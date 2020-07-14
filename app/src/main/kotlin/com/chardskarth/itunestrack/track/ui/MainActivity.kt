@@ -1,20 +1,18 @@
-package com.chardskarth.itunestrack
+package com.chardskarth.itunestrack.track.ui
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
+import com.chardskarth.itunestrack.R
 import com.chardskarth.itunestrack.databinding.TrackListBinding
-import com.chardskarth.itunestrack.track.MusicTrackAdapter
-import com.chardskarth.itunestrack.track.MusicTrackViewModel
+import com.chardskarth.itunestrack.track.viewmodel.MusicTrackViewModel
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var recyclerView: RecyclerView
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,20 +26,22 @@ class MainActivity : AppCompatActivity() {
 
     private fun initializeRecyclerView(musicTrackViewModel: MusicTrackViewModel) {
         recyclerView = findViewById(R.id.trackListRecyclerView)
-        recyclerView.setHasFixedSize(true)
 
-
-        val musicTrackAdapter = MusicTrackAdapter(this)
+        val musicTrackAdapter =
+            MusicTrackAdapterForRecyclerView(
+                this,
+                recyclerView
+            )
 
         musicTrackViewModel.livePagedList.observe(this, Observer {
             musicTrackAdapter.submitList(it)
         })
-
-        recyclerView.adapter = musicTrackAdapter
     }
 
     private fun bindViewModel(musicTrackViewModel: MusicTrackViewModel) {
-        val mainActivityBinding: TrackListBinding = DataBindingUtil.setContentView(this, R.layout.track_list)
+        val mainActivityBinding: TrackListBinding = DataBindingUtil.setContentView(this,
+            R.layout.track_list
+        )
         mainActivityBinding.viewModel = musicTrackViewModel
 
     }

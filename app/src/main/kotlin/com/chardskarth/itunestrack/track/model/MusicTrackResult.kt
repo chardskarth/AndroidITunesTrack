@@ -1,12 +1,13 @@
-package com.chardskarth.itunestrack.track
+package com.chardskarth.itunestrack.track.model
 
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.SerialName
+import kotlinx.serialization.nullable
 
 @Serializable
 data class MusicTrack(
     @SerialName("trackName") val title: String
-    , @SerialName("trackPrice") val price: Double?
+    , @SerialName("trackPrice") val price: Double? = null
     , @SerialName("trackId") val id: String
     , @SerialName("currency") val priceCurrency: String?
     , @SerialName("primaryGenreName") val genreName: String

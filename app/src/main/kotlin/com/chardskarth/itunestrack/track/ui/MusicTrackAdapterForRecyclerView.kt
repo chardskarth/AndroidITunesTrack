@@ -1,4 +1,4 @@
-package com.chardskarth.itunestrack.track
+package com.chardskarth.itunestrack.track.ui
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -11,13 +11,16 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.chardskarth.itunestrack.R
+import com.chardskarth.itunestrack.track.model.MusicTrack
 
-class MusicTrackAdapter(
+class MusicTrackAdapterForRecyclerView(
     private val context: Context
-) :
-    PagedListAdapter<MusicTrack, MusicTrackAdapter.ItemViewHolder>(DiffUtilItemCallback) {
+    , recyclerView: RecyclerView
+) : PagedListAdapter<MusicTrack, MusicTrackAdapterForRecyclerView.ItemViewHolder>(
+    DiffUtilItemCallback
+) {
 
-    companion object {
+    private companion object {
         object DiffUtilItemCallback : DiffUtil.ItemCallback<MusicTrack>() {
             override fun areItemsTheSame(oldItem: MusicTrack, newItem: MusicTrack) =
                 oldItem.id == newItem.id
@@ -29,17 +32,17 @@ class MusicTrackAdapter(
         private const val USD_CURR = "USD"
     }
 
-    class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val imgViewTrackArtwork: ImageView =
-            itemView.findViewById(R.id.trackListItemImgViewTrackArtwork)
-        val txtViewTrackName: TextView = itemView.findViewById(R.id.trackListItemTxtViewTrackName)
-        val txtViewTrackPrice: TextView = itemView.findViewById(R.id.trackListItemTxtViewTrackPrice)
+    init {
+        recyclerView.setHasFixedSize(true)
+        recyclerView.adapter = this
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         val view = LayoutInflater.from(context)
             .inflate(R.layout.track_list_item, parent, false)
-        return ItemViewHolder(view)
+        return ItemViewHolder(
+            view
+        )
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
@@ -53,6 +56,13 @@ class MusicTrackAdapter(
             holder.txtViewTrackPrice.text = getTrackPriceText(musicTrack)
         }
 
+    }
+
+    class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val imgViewTrackArtwork: ImageView =
+            itemView.findViewById(R.id.trackListItemImgViewTrackArtwork)
+        val txtViewTrackName: TextView = itemView.findViewById(R.id.trackListItemTxtViewTrackName)
+        val txtViewTrackPrice: TextView = itemView.findViewById(R.id.trackListItemTxtViewTrackPrice)
     }
 
     private fun getTrackPriceText(musicTrack: MusicTrack): String {

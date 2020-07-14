@@ -1,6 +1,7 @@
-package com.chardskarth.itunestrack.track
+package com.chardskarth.itunestrack.track.gateway
 
 import com.chardskarth.itunestrack.common.IApi
+import com.chardskarth.itunestrack.track.model.MusicTrackResult
 import io.ktor.client.request.get
 import io.ktor.http.ContentType
 import io.ktor.util.KtorExperimentalAPI
