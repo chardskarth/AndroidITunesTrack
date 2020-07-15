@@ -93,10 +93,10 @@ class MusicTrackViewModel(
         (livePagedList.value.isEmpty()
                 && resultStatus.value.equals(HttpStatusCode.MultiStatus))
 
-
     private fun isEmptyListAndHasError() =
         (livePagedList.value.isEmpty()
                 && resultStatus.value.equals(HttpStatusCode.InternalServerError))
+
 
     private fun isEmptyListAndHasNoError() =
         (livePagedList.value.isEmpty()

@@ -19,12 +19,20 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        bindViewModel(musicTrackViewModel)
-        initializeRecyclerView(musicTrackViewModel)
+        val mainActivityBinding: TrackListBinding = DataBindingUtil.setContentView(this,
+            R.layout.track_list
+        )
+        mainActivityBinding.lifecycleOwner = this
+        mainActivityBinding.viewModel = musicTrackViewModel
+
+        initializeRecyclerView(musicTrackViewModel, mainActivityBinding)
     }
 
-    private fun initializeRecyclerView(musicTrackViewModel: MusicTrackViewModel) {
-        recyclerView = findViewById(R.id.trackListRecyclerView)
+    private fun initializeRecyclerView(
+        musicTrackViewModel: MusicTrackViewModel
+        , trackListBinding: TrackListBinding
+    ) {
+        recyclerView = trackListBinding.trackListRecyclerView
 
         val musicTrackAdapter =
             MusicTrackAdapterForRecyclerView(
@@ -35,16 +43,8 @@ class MainActivity : AppCompatActivity() {
         musicTrackViewModel.livePagedList.observe(this, Observer {
             musicTrackAdapter.submitList(it)
         })
+
         musicTrackViewModel.generalViewTypeMediator.observe(this, Observer {  })
-        musicTrackViewModel.generalViewType.observe(this, Observer {  })
-        MusicTrackViewModel.resultStatus.observe(this, Observer {  })
     }
 
-    private fun bindViewModel(musicTrackViewModel: MusicTrackViewModel) {
-        val mainActivityBinding: TrackListBinding = DataBindingUtil.setContentView(this,
-            R.layout.track_list
-        )
-        mainActivityBinding.viewModel = musicTrackViewModel
-
-    }
 }
