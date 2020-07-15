@@ -9,16 +9,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.chardskarth.itunestrack.R
 import com.chardskarth.itunestrack.databinding.TrackListBinding
 import com.chardskarth.itunestrack.track.viewmodel.MusicTrackViewModel
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var recyclerView: RecyclerView
+    private val musicTrackViewModel: MusicTrackViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        val musicTrackViewModel = ViewModelProviders.of(this)
-            .get(MusicTrackViewModel::class.java)
 
         bindViewModel(musicTrackViewModel)
         initializeRecyclerView(musicTrackViewModel)
@@ -36,6 +35,9 @@ class MainActivity : AppCompatActivity() {
         musicTrackViewModel.livePagedList.observe(this, Observer {
             musicTrackAdapter.submitList(it)
         })
+        musicTrackViewModel.generalViewTypeMediator.observe(this, Observer {  })
+        musicTrackViewModel.generalViewType.observe(this, Observer {  })
+        MusicTrackViewModel.resultStatus.observe(this, Observer {  })
     }
 
     private fun bindViewModel(musicTrackViewModel: MusicTrackViewModel) {

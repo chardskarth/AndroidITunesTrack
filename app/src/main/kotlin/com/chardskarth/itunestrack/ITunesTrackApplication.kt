@@ -1,6 +1,7 @@
 package com.chardskarth.itunestrack
 
 import android.app.Application
+import android.util.Log
 import com.chardskarth.itunestrack.track.trackKoinModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -22,4 +23,8 @@ class ITunesTrackApplication : Application() {
         }
 
     }
+}
+
+fun Any.logd(message: String) {
+    Log.d(Any::class.java.simpleName, message)
 }

@@ -7,5 +7,5 @@ import org.koin.dsl.module
 
 val trackKoinModule = module {
     single { ITunesApi() }
-    viewModel { MusicTrackViewModel() }
+    viewModel { MusicTrackViewModel(get()) }
 }

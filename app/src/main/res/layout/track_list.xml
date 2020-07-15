@@ -29,6 +29,16 @@
             android:text="@string/center_text_tap_retry"
             />
 
+        <TextView
+            app:visibleOnMainViewTypeEmpty="@{viewModel.generalViewType}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textAlignment="center"
+            android:lines="2"
+            android:text="@string/center_text_empty"
+            />
+
         <androidx.recyclerview.widget.RecyclerView
             app:visibleOnMainViewTypeNormal="@{viewModel.generalViewType}"
             android:id="@+id/trackListRecyclerView"

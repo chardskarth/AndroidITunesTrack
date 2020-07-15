@@ -3,6 +3,7 @@ package com.chardskarth.itunestrack.track.gateway
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.DataSource
 import androidx.paging.PageKeyedDataSource
+import com.chardskarth.itunestrack.common.IApiResultCallback
 import com.chardskarth.itunestrack.track.model.MusicTrack
 import com.chardskarth.itunestrack.track.viewmodel.PageKeyedMusicTrackDataSource
 import kotlinx.coroutines.CoroutineScope
@@ -12,12 +13,12 @@ import org.koin.core.KoinComponent
 import org.koin.core.inject
 
 
-class MusicTrackDataSourceFactory: DataSource.Factory<Int, MusicTrack>() {
+class MusicTrackDataSourceFactory
+    : DataSource.Factory<Int, MusicTrack>() {
     private val liveDataSource = MutableLiveData<PageKeyedMusicTrackDataSource>()
 
     override fun create(): DataSource<Int, MusicTrack> {
-        val dataSource =
-            MusicTrackDataSource()
+        val dataSource = MusicTrackDataSource()
         liveDataSource.postValue(dataSource)
         return dataSource
     }

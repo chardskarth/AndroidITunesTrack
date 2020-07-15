@@ -31,4 +31,13 @@ object GeneralViewTypeBindingAdapters {
         else
             view.visibility = View.GONE
     }
+
+    @JvmStatic
+    @BindingAdapter("app:visibleOnMainViewTypeEmpty")
+    fun setVisibleWhenMainViewTypeEmpty(view: View, generalViewType: GeneralViewType) {
+        if (generalViewType == GeneralViewType.Empty)
+            view.visibility = View.VISIBLE
+        else
+            view.visibility = View.GONE
+    }
 }

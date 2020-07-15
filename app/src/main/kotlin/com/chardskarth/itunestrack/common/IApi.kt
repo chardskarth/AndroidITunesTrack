@@ -17,6 +17,7 @@ typealias JsonFeatureConfigBlock = JsonFeature.Config.() -> Unit
 
 interface IApi {
     val baseUrl: String
+    var apiResultCallback: IApiResultCallback?
 
     fun createClient(jsonFeatureConfigBlock: JsonFeatureConfigBlock? = null) = HttpClient() {
         install(JsonFeature) {
