@@ -71,6 +71,7 @@ object Android {
         private const val version = "4.11.0"
 
         const val glide = "com.github.bumptech.glide:glide:$version"
+        const val bindingAdapter = "com.github.s0nerik:glide-bindingadapter:1.2.1"
         const val glideProcessor = "com.github.bumptech.glide:compiler:$version"
     }
 

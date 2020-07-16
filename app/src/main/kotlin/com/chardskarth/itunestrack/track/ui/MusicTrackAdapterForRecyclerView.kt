@@ -11,12 +11,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.chardskarth.itunestrack.R
+import com.chardskarth.itunestrack.databinding.TrackListItemBinding
 import com.chardskarth.itunestrack.track.model.MusicTrack
 
 class MusicTrackAdapterForRecyclerView(
     private val context: Context
     , recyclerView: RecyclerView
-) : PagedListAdapter<MusicTrack, MusicTrackAdapterForRecyclerView.ItemViewHolder>(
+) : PagedListAdapter<MusicTrack, MusicTrackAdapterForRecyclerView.MusicTrackViewHolder>(
     DiffUtilItemCallback
 ) {
 
@@ -25,11 +26,13 @@ class MusicTrackAdapterForRecyclerView(
             override fun areItemsTheSame(oldItem: MusicTrack, newItem: MusicTrack) =
                 oldItem.id == newItem.id
 
-            override fun areContentsTheSame(oldItem: MusicTrack, newItem: MusicTrack) =
+            override fun areContentsTheSame(
+                oldItem: MusicTrack,
+                newItem: MusicTrack
+            ) =
                 oldItem == newItem
         }
 
-        private const val USD_CURR = "USD"
     }
 
     init {
@@ -37,42 +40,23 @@ class MusicTrackAdapterForRecyclerView(
         recyclerView.adapter = this
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
-        val view = LayoutInflater.from(context)
-            .inflate(R.layout.track_list_item, parent, false)
-        return ItemViewHolder(
-            view
-        )
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MusicTrackViewHolder {
+        val trackListView = TrackListItemBinding.inflate(LayoutInflater.from(context))
+        return MusicTrackViewHolder(trackListView)
     }
 
-    override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: MusicTrackViewHolder, position: Int) {
         getItem(position)?.let { musicTrack ->
-            Glide.with(context)
-                .load(musicTrack.trackImageUrl60)
-                .placeholder(R.drawable.ic_image_placeholder)
-                .into(holder.imgViewTrackArtwork)
-
-            holder.txtViewTrackName.text = musicTrack.title
-            holder.txtViewTrackPrice.text = getTrackPriceText(musicTrack)
+            holder.bind(musicTrack)
         }
-
     }
 
-    class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val imgViewTrackArtwork: ImageView =
-            itemView.findViewById(R.id.trackListItemImgViewTrackArtwork)
-        val txtViewTrackName: TextView = itemView.findViewById(R.id.trackListItemTxtViewTrackName)
-        val txtViewTrackPrice: TextView = itemView.findViewById(R.id.trackListItemTxtViewTrackPrice)
-    }
+    class MusicTrackViewHolder(private val trackListItemBinding: TrackListItemBinding) :
+        RecyclerView.ViewHolder(trackListItemBinding.trackList) {
 
-    private fun getTrackPriceText(musicTrack: MusicTrack): String {
-        val trackPriceCurrency = when (musicTrack.priceCurrency?.trim()?.toUpperCase()) {
-            USD_CURR -> "$"
-            else -> musicTrack.priceCurrency
+        fun bind(musicTrack: MusicTrack) {
+            trackListItemBinding.musicTrack = musicTrack
         }
-
-        return musicTrack.price?.let {
-            "${musicTrack.price} $trackPriceCurrency"
-        } ?: context.resources.getString(R.string.track_list_price_no_price)
     }
+
 }

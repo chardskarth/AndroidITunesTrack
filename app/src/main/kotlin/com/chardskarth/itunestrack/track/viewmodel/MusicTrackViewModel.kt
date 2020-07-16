@@ -32,6 +32,8 @@ class MusicTrackViewModel(
 
     val livePagedList: LiveData<PagedListMusicTrack>
 
+    private val musicTrackItemDataSourceFactory = MusicTrackDataSourceFactory()
+
     companion object {
         val resultStatus = MutableLiveData(HttpStatusCode.MultiStatus)
 
@@ -56,7 +58,6 @@ class MusicTrackViewModel(
 
     init {
         iTunesApi.apiResultCallback = MusicTrackApiResultCallback
-        val musicTrackItemDataSourceFactory = MusicTrackDataSourceFactory()
 
         val pagedListConfig = PagedList.Config.Builder()
             .setEnablePlaceholders(false)
@@ -104,6 +105,12 @@ class MusicTrackViewModel(
 
     override fun onCleared() {
         iTunesApi.apiResultCallback = null
+    }
+
+    fun refreshIfError() {
+        if(generalViewType.value == GeneralViewType.Error) {
+            musicTrackItemDataSourceFactory.invalidate()
+        }
     }
 
 }

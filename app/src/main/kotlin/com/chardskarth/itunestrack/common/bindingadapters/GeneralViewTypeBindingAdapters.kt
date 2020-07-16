@@ -6,7 +6,7 @@ import com.chardskarth.itunestrack.common.GeneralViewType
 
 object GeneralViewTypeBindingAdapters {
     @JvmStatic
-    @BindingAdapter("app:visibleOnMainViewTypeLoading")
+    @BindingAdapter("visibleOnMainViewTypeLoading")
     fun setVisibleWhenMainViewTypeLoading(view: View, generalViewType: GeneralViewType) {
         if (generalViewType == GeneralViewType.Loading)
             view.visibility = View.VISIBLE
@@ -15,7 +15,7 @@ object GeneralViewTypeBindingAdapters {
     }
 
     @JvmStatic
-    @BindingAdapter("app:visibleOnMainViewTypeError")
+    @BindingAdapter("visibleOnMainViewTypeError")
     fun setVisibleWhenMainViewTypeError(view: View, generalViewType: GeneralViewType) {
         if (generalViewType == GeneralViewType.Error)
             view.visibility = View.VISIBLE
@@ -24,7 +24,7 @@ object GeneralViewTypeBindingAdapters {
     }
 
     @JvmStatic
-    @BindingAdapter("app:invisibleOnMainViewTypeUnlessNormal")
+    @BindingAdapter("invisibleOnMainViewTypeUnlessNormal")
     fun setVisibleWhenMainViewTypeNormal(view: View, generalViewType: GeneralViewType) {
         if (generalViewType == GeneralViewType.Normal)
             view.visibility = View.VISIBLE
@@ -33,7 +33,7 @@ object GeneralViewTypeBindingAdapters {
     }
 
     @JvmStatic
-    @BindingAdapter("app:visibleOnMainViewTypeEmpty")
+    @BindingAdapter("visibleOnMainViewTypeEmpty")
     fun setVisibleWhenMainViewTypeEmpty(view: View, generalViewType: GeneralViewType) {
         if (generalViewType == GeneralViewType.Empty)
             view.visibility = View.VISIBLE

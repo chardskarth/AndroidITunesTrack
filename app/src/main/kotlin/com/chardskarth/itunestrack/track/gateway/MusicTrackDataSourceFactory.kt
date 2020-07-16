@@ -3,7 +3,7 @@ package com.chardskarth.itunestrack.track.gateway
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.DataSource
 import androidx.paging.PageKeyedDataSource
-import com.chardskarth.itunestrack.common.IApiResultCallback
+import com.chardskarth.itunestrack.track.gateway.model.MusicTrackResponse
 import com.chardskarth.itunestrack.track.model.MusicTrack
 import com.chardskarth.itunestrack.track.viewmodel.PageKeyedMusicTrackDataSource
 import kotlinx.coroutines.CoroutineScope
@@ -16,11 +16,16 @@ import org.koin.core.inject
 class MusicTrackDataSourceFactory
     : DataSource.Factory<Int, MusicTrack>() {
     private val liveDataSource = MutableLiveData<PageKeyedMusicTrackDataSource>()
+    private lateinit var dataSource: MusicTrackDataSource
 
     override fun create(): DataSource<Int, MusicTrack> {
-        val dataSource = MusicTrackDataSource()
+        dataSource = MusicTrackDataSource()
         liveDataSource.postValue(dataSource)
         return dataSource
+    }
+
+    fun invalidate() {
+        dataSource.invalidate()
     }
 
     class MusicTrackDataSource : PageKeyedDataSource<Int, MusicTrack>(), KoinComponent {
@@ -40,7 +45,7 @@ class MusicTrackDataSourceFactory
                 val musicTrackResult = iTunesApi.search(
                     SEARCH_TERM,
                     FIRST_PAGE
-                ).results
+                )
                 callback.onResult(musicTrackResult, null, FIRST_PAGE + 1)
             }
         }
@@ -48,7 +53,7 @@ class MusicTrackDataSourceFactory
         override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, MusicTrack>) {
             CoroutineScope(Dispatchers.IO).launch {
                 val pageKey = params.key + 1
-                val musicTrackResult = iTunesApi.search(SEARCH_TERM, pageKey).results
+                val musicTrackResult = iTunesApi.search(SEARCH_TERM, pageKey)
                 callback.onResult(musicTrackResult, pageKey)
             }
         }
@@ -56,7 +61,7 @@ class MusicTrackDataSourceFactory
         override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, MusicTrack>) {
             CoroutineScope(Dispatchers.IO).launch {
                 val pageKey = if (params.key > FIRST_PAGE) params.key - 1 else 0
-                val musicTrackResult = iTunesApi.search(SEARCH_TERM, pageKey).results
+                val musicTrackResult = iTunesApi.search(SEARCH_TERM, pageKey)
                 callback.onResult(musicTrackResult, pageKey)
             }
         }

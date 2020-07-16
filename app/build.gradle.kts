@@ -63,6 +63,7 @@ dependencies {
     implementation(Android.xPagingRuntimeKtx)
 
     implementation(Android.Glide.glide)
+    implementation(Android.Glide.bindingAdapter)
 
     implementation(Ktor.clientCio)
     implementation(Ktor.ktxSerializerJvm)

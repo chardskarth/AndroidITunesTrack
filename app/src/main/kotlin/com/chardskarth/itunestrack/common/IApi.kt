@@ -1,6 +1,7 @@
 package com.chardskarth.itunestrack.common
 
 import io.ktor.client.HttpClient
+import io.ktor.client.features.HttpTimeout
 import io.ktor.client.features.json.JsonFeature
 import io.ktor.client.features.json.serializer.KotlinxSerializer
 import io.ktor.client.features.logging.DEFAULT
@@ -36,6 +37,9 @@ interface IApi {
         install(Logging) {
             logger = Logger.DEFAULT
             level = LogLevel.ALL
+        }
+        install(HttpTimeout) {
+            requestTimeoutMillis = 10000
         }
     }
 

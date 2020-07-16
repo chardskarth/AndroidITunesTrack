@@ -4,6 +4,8 @@ buildscript {
         google()
         mavenCentral()
         jcenter()
+
+        maven { url = java.net.URI("https://jitpack.io") }
     }
     dependencies {
         classpath(BuildPlugins.androidGradlePlugin)
@@ -16,6 +18,8 @@ allprojects {
         google()
         mavenCentral()
         jcenter()
+
+        maven { url = java.net.URI("https://jitpack.io") }
     }
 }
 

@@ -1,10 +1,10 @@
-package com.chardskarth.itunestrack.track.model
+package com.chardskarth.itunestrack.track.gateway.model
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class MusicTrack(
+data class MusicTrackResponse(
     @SerialName("trackName") val title: String
     , @SerialName("trackPrice") val price: Double? = null
     , @SerialName("trackId") val id: String
@@ -14,10 +14,3 @@ data class MusicTrack(
     , @SerialName("artworkUrl60") val trackImageUrl60: String
     , @SerialName("artworkUrl100") val trackImageUrl100: String
 )
-
-@Serializable
-data class MusicTrackResult(
-    val resultCount: Int = 0
-    , val results: List<MusicTrack> = emptyList()
-)
-
