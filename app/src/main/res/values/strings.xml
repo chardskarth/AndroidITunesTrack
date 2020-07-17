@@ -3,7 +3,7 @@
     <string name="title_item_list">Items</string>
     <string name="title_item_detail">Item Detail</string>
     <string name="track_artwork_content_description">Track artwork</string>
-    <string name="track_list_price_no_price">Not Available</string>
+    <string name="track_list_no_price">Not Available</string>
     <string name="center_text_tap_retry">Oops, can\'t load iTunes tracks.\nTap to retry.</string>
     <string name="center_text_empty">There\'s nothing to see here.</string>
 
