@@ -9,8 +9,12 @@ object MusicTrackPriceTextBindingAdapters {
 
 
     @JvmStatic
-    @BindingAdapter(value = ["musicTrackPriceText", "emptyText"], requireAll = false)
-    fun getMusicTrackPriceText(view: TextView, musicTrack: MusicTrack?, stringDefault: String = "") {
+    @BindingAdapter(value = ["musicTrackPriceText", "musicTrackPriceEmptyText"], requireAll = false)
+    fun setMusicTrackTextAndEmptyText(
+        view: TextView,
+        musicTrack: MusicTrack?,
+        stringDefault: String?
+    ) {
         val trackPriceText = with(musicTrack ?: MusicTrack()) {
             val trackPriceCurrency = when (priceCurrency?.trim()?.toUpperCase()) {
                 USD_CURR -> "$"

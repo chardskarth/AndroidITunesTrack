@@ -22,6 +22,7 @@
             android:contentDescription="@string/track_artwork_content_description" />
 
         <TextView
+            android:id="@+id/trackListItemTxtViewTrackName"
             android:layout_width="250dp"
             android:layout_height="31dp"
             android:layout_alignParentTop="true"
@@ -30,9 +31,20 @@
 
             android:layout_toEndOf="@id/trackListItemImgViewTrackArtwork"
             android:text="@{musicTrack.title}"
+            android:lines="1"
             android:textAppearance="@style/MaterialAlertDialog.MaterialComponents.Title.Text"
             android:textSize="20dp"
             tools:ignore="HardcodedText,SpUsage" />
+
+        <TextView
+            android:id="@+id/trackListItemTxtViewGenre"
+            android:text="@{musicTrack.genreName}"
+            android:layout_width="21dp"
+            android:layout_height="21dp"
+            android:layout_below="@id/trackListItemTxtViewTrackName"
+            android:layout_alignStart="@id/trackListItemTxtViewTrackName"
+            android:layout_marginTop="5dp"
+            />
 
         <!--    <LinearLayout-->
         <!--        android:layout_width="wrap_content"-->
@@ -61,6 +73,7 @@
         <TextView
             android:id="@+id/trackListItemTxtViewTrackPrice"
             app:musicTrackPriceText="@{musicTrack}"
+            app:musicTrackPriceEmptyText="@string/track_list_no_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
