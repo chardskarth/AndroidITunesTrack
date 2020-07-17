@@ -42,3 +42,6 @@ class ITunesTrackApplication : Application() {
 fun Any.logd(message: String) {
     Log.d(Any::class.java.simpleName, message)
 }
+fun Any.logi(message: String) {
+    Log.i(Any::class.java.simpleName, message)
+}

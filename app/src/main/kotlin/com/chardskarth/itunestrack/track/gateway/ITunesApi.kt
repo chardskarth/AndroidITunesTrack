@@ -1,7 +1,10 @@
 package com.chardskarth.itunestrack.track.gateway
 
-import com.chardskarth.itunestrack.common.IApi
-import com.chardskarth.itunestrack.common.IApiResultCallback
+import com.chardskarth.itunestrack.common.gateway.HttpTimeoutConfigBlock
+import com.chardskarth.itunestrack.common.gateway.JsonFeatureConfigBlock
+import com.chardskarth.itunestrack.common.gateway.HttpBuilderFeatureConfig
+import com.chardskarth.itunestrack.common.gateway.IApi
+import com.chardskarth.itunestrack.common.gateway.IApiResultCallback
 import com.chardskarth.itunestrack.logd
 import com.chardskarth.itunestrack.track.gateway.model.MusicTrackResponse
 import com.chardskarth.itunestrack.track.gateway.model.MusicTrackSearchResponse
@@ -16,9 +19,14 @@ class ITunesApi : IApi {
 
     @KtorExperimentalAPI
     private val client by lazy {
-        createClient {
-            acceptContentTypes = acceptContentTypes + ContentType("text", "javascript")
-        }
+        createClient(object : HttpBuilderFeatureConfig {
+            override val jsonFeatureConfigBlock: JsonFeatureConfigBlock = {
+                acceptContentTypes = acceptContentTypes + ContentType("text", "javascript")
+            }
+            override val httpTimeoutConfigBlock: HttpTimeoutConfigBlock = {
+                requestTimeoutMillis = 30000
+            }
+        })
     }
 
     companion object {
@@ -40,7 +48,7 @@ class ITunesApi : IApi {
             result.map(MusicTrackResponse::toMusicTrack)
         } catch (err: Exception) {
             logd(err.localizedMessage ?: err.message.toString())
-            apiResultCallback?.onIsError()
+            apiResultCallback?.onIsError(err)
             emptyList()
         }
     }

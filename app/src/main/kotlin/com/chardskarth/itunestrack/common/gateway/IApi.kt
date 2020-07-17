@@ -1,4 +1,4 @@
-package com.chardskarth.itunestrack.common
+package com.chardskarth.itunestrack.common.gateway
 
 import io.ktor.client.HttpClient
 import io.ktor.client.features.HttpTimeout
@@ -14,13 +14,12 @@ import kotlinx.serialization.json.JsonConfiguration
 
 import java.net.URLEncoder
 
-typealias JsonFeatureConfigBlock = JsonFeature.Config.() -> Unit
 
 interface IApi {
     val baseUrl: String
     var apiResultCallback: IApiResultCallback?
 
-    fun createClient(jsonFeatureConfigBlock: JsonFeatureConfigBlock? = null) = HttpClient() {
+    fun createClient(httpBuilderFeatureConfig: HttpBuilderFeatureConfig) = HttpClient {
         install(JsonFeature) {
             serializer = KotlinxSerializer(
                 Json(
@@ -30,16 +29,14 @@ interface IApi {
                     )
                 )
             )
-            jsonFeatureConfigBlock?.let {
-                this.jsonFeatureConfigBlock()
-            }
+            httpBuilderFeatureConfig.jsonFeatureConfigBlock?.let { this.it() }
         }
         install(Logging) {
             logger = Logger.DEFAULT
             level = LogLevel.ALL
         }
         install(HttpTimeout) {
-            requestTimeoutMillis = 10000
+            httpBuilderFeatureConfig.httpTimeoutConfigBlock?.let { this.it() }
         }
     }
 

@@ -8,13 +8,15 @@ import androidx.paging.LivePagedListBuilder
 import androidx.paging.PageKeyedDataSource
 import androidx.paging.PagedList
 import com.chardskarth.itunestrack.common.GeneralViewType
-import com.chardskarth.itunestrack.common.IApiResultCallback
-import com.chardskarth.itunestrack.logd
+import com.chardskarth.itunestrack.common.extensions.equals
+import com.chardskarth.itunestrack.common.extensions.isEmpty
+import com.chardskarth.itunestrack.common.extensions.isSuccess
+import com.chardskarth.itunestrack.common.gateway.IApiResultCallback
+import com.chardskarth.itunestrack.logi
 import com.chardskarth.itunestrack.track.gateway.ITunesApi
 import com.chardskarth.itunestrack.track.gateway.MusicTrackDataSourceFactory
 import com.chardskarth.itunestrack.track.model.MusicTrack
 import io.ktor.http.HttpStatusCode
-import io.ktor.http.isSuccess
 
 
 typealias PagedListMusicTrack = PagedList<MusicTrack>
@@ -25,39 +27,24 @@ class MusicTrackViewModel(
 ) : ViewModel() {
     val generalViewTypeMediator = MediatorLiveData<GeneralViewType>()
     val generalViewType = MutableLiveData(GeneralViewType.Loading)
-
-    private val _textSearchTrack: MutableLiveData<String>
-    val textSearchTrack: LiveData<String>
-        get() = _textSearchTrack
-
     val livePagedList: LiveData<PagedListMusicTrack>
-
     private val musicTrackItemDataSourceFactory = MusicTrackDataSourceFactory()
+    val resultStatus = MutableLiveData(HttpStatusCode.MultiStatus)
 
-    companion object {
-        val resultStatus = MutableLiveData(HttpStatusCode.MultiStatus)
-
-        object MusicTrackApiResultCallback : IApiResultCallback {
+    init {
+        iTunesApi.apiResultCallback = object : IApiResultCallback {
             override fun onIsLoading() {
-                logd("loading here")
                 resultStatus.postValue(HttpStatusCode.MultiStatus)
             }
 
-            override fun onIsError() {
-                logd("Error here")
+            override fun onIsError(err: Exception) {
                 resultStatus.postValue(HttpStatusCode.InternalServerError)
             }
 
             override fun onIsSuccess() {
-                logd("Success here")
                 resultStatus.postValue(HttpStatusCode.OK)
             }
         }
-
-    }
-
-    init {
-        iTunesApi.apiResultCallback = MusicTrackApiResultCallback
 
         val pagedListConfig = PagedList.Config.Builder()
             .setEnablePlaceholders(false)
@@ -70,7 +57,6 @@ class MusicTrackViewModel(
         generalViewTypeMediator.addSource(livePagedList) { mutateGeneralViewType() }
         generalViewTypeMediator.addSource(resultStatus) { mutateGeneralViewType() }
 
-        _textSearchTrack = MutableLiveData("")
     }
 
     private fun mutateGeneralViewType() {
@@ -80,13 +66,13 @@ class MusicTrackViewModel(
             isEmptyListAndHasNoError() -> GeneralViewType.Empty
             !livePagedList.value.isEmpty() -> GeneralViewType.Normal
             else -> {
-                logd("Cant derive GeneralViewType. Defaulting.")
-                logd("list size: ${livePagedList.value?.size}. result status: $resultStatus")
+                logi("Cant derive GeneralViewType. Defaulting.")
+                logi("list size: ${livePagedList.value?.size}. result status: $resultStatus")
                 GeneralViewType.Normal
 
             }
         }
-        logd("Derived generalviewtype: $derivedGeneralViewType")
+        logi("Derived generalviewtype: $derivedGeneralViewType")
         generalViewType.postValue(derivedGeneralViewType)
     }
 
@@ -96,7 +82,7 @@ class MusicTrackViewModel(
 
     private fun isEmptyListAndHasError() =
         (livePagedList.value.isEmpty()
-                && resultStatus.value.equals(HttpStatusCode.InternalServerError))
+                && !resultStatus.value.isSuccess())
 
 
     private fun isEmptyListAndHasNoError() =
@@ -108,13 +94,10 @@ class MusicTrackViewModel(
     }
 
     fun refreshIfError() {
-        if(generalViewType.value == GeneralViewType.Error) {
+        if (generalViewType.value == GeneralViewType.Error) {
             musicTrackItemDataSourceFactory.invalidate()
         }
     }
 
 }
 
-fun <T> List<T>?.isEmpty() = this?.isEmpty() ?: true
-fun Any?.equals(other: Any) = this?.equals(other) ?: false
-fun HttpStatusCode?.isSuccess() = this?.isSuccess() ?: false
