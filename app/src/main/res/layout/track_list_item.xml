@@ -72,8 +72,8 @@
 
         <TextView
             android:id="@+id/trackListItemTxtViewTrackPrice"
-            app:musicTrackPriceText="@{musicTrack}"
-            app:musicTrackPriceEmptyText="@string/track_list_no_price"
+            musicTrackPriceText="@{musicTrack}"
+            musicTrackPriceEmptyText="@string/track_list_no_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
