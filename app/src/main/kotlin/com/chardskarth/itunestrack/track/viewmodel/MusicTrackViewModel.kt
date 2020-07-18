@@ -5,7 +5,6 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.paging.LivePagedListBuilder
-import androidx.paging.PageKeyedDataSource
 import androidx.paging.PagedList
 import com.chardskarth.itunestrack.common.GeneralViewType
 import com.chardskarth.itunestrack.common.extensions.equals
@@ -13,21 +12,18 @@ import com.chardskarth.itunestrack.common.extensions.isEmpty
 import com.chardskarth.itunestrack.common.extensions.isSuccess
 import com.chardskarth.itunestrack.common.extensions.logi
 import com.chardskarth.itunestrack.common.gateway.ApiResultCallbackHandler
+import com.chardskarth.itunestrack.track.MusicTrackPagedList
 import com.chardskarth.itunestrack.track.gateway.ITunesApi
 import com.chardskarth.itunestrack.track.gateway.MusicTrackDataSourceFactory
-import com.chardskarth.itunestrack.track.model.MusicTrack
 import io.ktor.http.HttpStatusCode
 
-
-typealias PagedListMusicTrack = PagedList<MusicTrack>
-typealias PageKeyedMusicTrackDataSource = PageKeyedDataSource<Int, MusicTrack>
 
 class MusicTrackViewModel(
     private val iTunesApi: ITunesApi
 ) : ViewModel() {
     val generalViewTypeMediator = MediatorLiveData<GeneralViewType>()
     val generalViewType = MutableLiveData(GeneralViewType.Loading)
-    val livePagedList: LiveData<PagedListMusicTrack>
+    val livePagedList: LiveData<MusicTrackPagedList>
     private val musicTrackItemDataSourceFactory = MusicTrackDataSourceFactory()
     val resultStatus = MutableLiveData(HttpStatusCode.MultiStatus)
 

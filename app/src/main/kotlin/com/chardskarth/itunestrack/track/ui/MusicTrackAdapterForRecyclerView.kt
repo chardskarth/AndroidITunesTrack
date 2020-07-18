@@ -2,22 +2,17 @@ package com.chardskarth.itunestrack.track.ui
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.chardskarth.itunestrack.R
 import com.chardskarth.itunestrack.databinding.TrackListItemBinding
+import com.chardskarth.itunestrack.track.MusicTrackPagedListAdapter
 import com.chardskarth.itunestrack.track.model.MusicTrack
 
 class MusicTrackAdapterForRecyclerView(
     private val context: Context
     , recyclerView: RecyclerView
-) : PagedListAdapter<MusicTrack, MusicTrackAdapterForRecyclerView.MusicTrackViewHolder>(
+) : MusicTrackPagedListAdapter(
     DiffUtilItemCallback
 ) {
 
@@ -51,12 +46,5 @@ class MusicTrackAdapterForRecyclerView(
         }
     }
 
-    class MusicTrackViewHolder(private val trackListItemBinding: TrackListItemBinding) :
-        RecyclerView.ViewHolder(trackListItemBinding.trackList) {
-
-        fun bind(musicTrack: MusicTrack) {
-            trackListItemBinding.musicTrack = musicTrack
-        }
-    }
 
 }
