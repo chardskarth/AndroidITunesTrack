@@ -5,6 +5,7 @@ import com.chardskarth.itunestrack.common.gateway.*
 import com.chardskarth.itunestrack.track.gateway.ITunesApi
 import com.chardskarth.itunestrack.track.gateway.model.MusicTrackResponse
 import com.chardskarth.itunestrack.track.gateway.model.MusicTrackSearchResponse
+import com.chardskarth.itunestrack.track.mapper.toMusicTrack
 import com.chardskarth.itunestrack.track.model.MusicTrack
 import io.ktor.client.request.get
 import io.ktor.http.ContentType
@@ -53,6 +54,3 @@ class ITunesKtorApi : KtorApi, ITunesApi {
 
 }
 
-private fun MusicTrackResponse.toMusicTrack() = MusicTrack(
-    title, price, id, priceCurrency, genreName, trackImageUrl30, trackImageUrl60, trackImageUrl100
-)
