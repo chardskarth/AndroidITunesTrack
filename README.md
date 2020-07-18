@@ -5,9 +5,9 @@ Welcome to my first android app. This is a sample application as part of my andr
 
 * **ViewModels, DataBinding, BindingAdapters**. Thanks to **android jetpack**, android layouts can now be decorated and given business logic **separately**.
 
-* **Kotlin Typealiases** are utilized in this project. They are found in the `KoinModule.kt` of each (`package feature`)[#Organizing package]. Type aliases, with proper naming conventions, aims to help in reading `long nested type parameters`. 
+* **Kotlin Typealiases** are utilized in this project. They are found in the `KoinModule.kt` of each [`package feature`](https://github.com/chardskarth/AndroidITunesTrack#architecture). Type aliases, with proper naming conventions, aims to help in reading `long nested type parameters`. 
 
-* **No mapper library yet**. `object-to-object` mapping is done simply via extension functions and data class constructors.
+* **Simple data class mapping**. `object-to-object` mapping is done simply via extension functions and data class constructors.
 
 * :( **Plain UI** - will still have to work on this.
 
@@ -41,7 +41,7 @@ Here's a sample structure:
   └── viewmodel
 ```
 
-> `track` is an ambiguous definition on its own. But when seen besides the `musicplayer`, the reader you should at least grasp the idea that the application has a *music track* and a *music player*.
+`track` is an ambiguous definition on its own. But when seen besides the `musicplayer`, the reader you should at least grasp the idea that the application has a *music track* and a *music player*.
 
 >ps. `musictrack` here is just for example. Unfortunately there's no music player feature here. There's none yet at least ;)
 
