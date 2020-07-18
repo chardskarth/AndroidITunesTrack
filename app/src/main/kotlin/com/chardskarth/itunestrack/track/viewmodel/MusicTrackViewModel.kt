@@ -11,8 +11,8 @@ import com.chardskarth.itunestrack.common.GeneralViewType
 import com.chardskarth.itunestrack.common.extensions.equals
 import com.chardskarth.itunestrack.common.extensions.isEmpty
 import com.chardskarth.itunestrack.common.extensions.isSuccess
-import com.chardskarth.itunestrack.common.gateway.IApiResultCallback
-import com.chardskarth.itunestrack.logi
+import com.chardskarth.itunestrack.common.extensions.logi
+import com.chardskarth.itunestrack.common.gateway.ApiResultCallbackHandler
 import com.chardskarth.itunestrack.track.gateway.ITunesApi
 import com.chardskarth.itunestrack.track.gateway.MusicTrackDataSourceFactory
 import com.chardskarth.itunestrack.track.model.MusicTrack
@@ -32,7 +32,7 @@ class MusicTrackViewModel(
     val resultStatus = MutableLiveData(HttpStatusCode.MultiStatus)
 
     init {
-        iTunesApi.apiResultCallback = object : IApiResultCallback {
+        iTunesApi.apiResultCallbackHandler = object : ApiResultCallbackHandler {
             override fun onIsLoading() {
                 resultStatus.postValue(HttpStatusCode.MultiStatus)
             }
@@ -90,7 +90,7 @@ class MusicTrackViewModel(
                 && resultStatus.value.isSuccess())
 
     override fun onCleared() {
-        iTunesApi.apiResultCallback = null
+        iTunesApi.apiResultCallbackHandler = null
     }
 
     fun refreshIfError() {

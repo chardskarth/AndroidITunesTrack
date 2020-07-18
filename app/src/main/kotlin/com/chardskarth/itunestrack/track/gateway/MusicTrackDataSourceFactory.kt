@@ -3,7 +3,6 @@ package com.chardskarth.itunestrack.track.gateway
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.DataSource
 import androidx.paging.PageKeyedDataSource
-import com.chardskarth.itunestrack.track.gateway.model.MusicTrackResponse
 import com.chardskarth.itunestrack.track.model.MusicTrack
 import com.chardskarth.itunestrack.track.viewmodel.PageKeyedMusicTrackDataSource
 import kotlinx.coroutines.CoroutineScope

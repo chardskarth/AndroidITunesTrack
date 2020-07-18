@@ -15,9 +15,8 @@ import kotlinx.serialization.json.JsonConfiguration
 import java.net.URLEncoder
 
 
-interface IApi {
+interface KtorApi {
     val baseUrl: String
-    var apiResultCallback: IApiResultCallback?
 
     fun createClient(httpBuilderFeatureConfig: HttpBuilderFeatureConfig) = HttpClient {
         install(JsonFeature) {

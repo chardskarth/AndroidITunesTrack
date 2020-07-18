@@ -1,13 +1,12 @@
 package com.chardskarth.itunestrack
 
 import android.app.Application
-import android.util.Log
 import com.chardskarth.itunestrack.track.trackKoinModule
+import com.github.s0nerik.glide_bindingadapter.GlideBindingConfig
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
-import com.github.s0nerik.glide_bindingadapter.GlideBindingConfig
 
 class ITunesTrackApplication : Application() {
 
@@ -39,9 +38,3 @@ class ITunesTrackApplication : Application() {
     }
 }
 
-fun Any.logd(message: String) {
-    Log.d(Any::class.java.simpleName, message)
-}
-fun Any.logi(message: String) {
-    Log.i(Any::class.java.simpleName, message)
-}
