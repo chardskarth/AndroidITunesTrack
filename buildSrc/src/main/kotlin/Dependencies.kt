@@ -92,3 +92,10 @@ object Testing {
 
     const val junit = "junit:junit:$junitVersion"
 }
+
+object NitritePersistence {
+    private const val version = "3.4.2"
+
+    const val nitrite = "org.dizitart:nitrite:$version"
+    const val nitriteKotlin = "org.dizitart:potassium-nitrite:$version"
+}

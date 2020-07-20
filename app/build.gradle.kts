@@ -72,6 +72,9 @@ dependencies {
     implementation(Koin.android)
     implementation(Koin.androidViewModel)
 
+    implementation(NitritePersistence.nitrite)
+    implementation(NitritePersistence.nitriteKotlin)
+
     testImplementation(Testing.junit)
     androidTestImplementation(Android.xTestExt)
     androidTestImplementation(Android.xTestEspressoCore)
