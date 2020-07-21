@@ -1,7 +1,8 @@
 package com.chardskarth.itunestrack
 
 import android.app.Application
-import com.chardskarth.itunestrack.track.trackKoinModule
+import com.chardskarth.itunestrack.impl.loadImplKoinModule
+import com.chardskarth.itunestrack.track.loadTrackKoinModule
 import com.github.s0nerik.glide_bindingadapter.GlideBindingConfig
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -32,9 +33,11 @@ class ITunesTrackApplication : Application() {
         startKoin {
             androidLogger()
             androidContext(this@ITunesTrackApplication)
-            modules(appModule, trackKoinModule)
+            modules(appModule)
         }
 
+        loadTrackKoinModule()
+        loadImplKoinModule()
     }
 }
 
