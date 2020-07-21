@@ -1,7 +1,7 @@
-package com.chardskarth.itunestrack.track.gateway.impl
+package com.chardskarth.itunestrack.impl.track.gateway
 
+import com.chardskarth.itunestrack.base.gateway.*
 import com.chardskarth.itunestrack.common.extensions.logd
-import com.chardskarth.itunestrack.common.gateway.*
 import com.chardskarth.itunestrack.track.gateway.ITunesApi
 import com.chardskarth.itunestrack.track.gateway.model.MusicTrackResponse
 import com.chardskarth.itunestrack.track.gateway.model.MusicTrackSearchResponse

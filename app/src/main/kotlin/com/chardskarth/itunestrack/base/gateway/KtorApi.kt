@@ -1,4 +1,4 @@
-package com.chardskarth.itunestrack.common.gateway
+package com.chardskarth.itunestrack.base.gateway
 
 import io.ktor.client.HttpClient
 import io.ktor.client.features.HttpTimeout
