@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
         val searchMenuItem = menu!!.findItem(R.id.searchMenuActionSearch)
         val searchView = searchMenuItem.actionView as SearchView
         searchView.setOnQueryTextListener(DebounceTextChangeListener(this.lifecycle) {
-            musicTrackViewModel.searchText.postValue(it)
+            musicTrackViewModel.setSearchText(it ?: "")
         })
         return super.onCreateOptionsMenu(menu)
     }
